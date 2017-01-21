@@ -25,8 +25,15 @@ public class WinLoseCondition : MonoBehaviour {
 
 		for(int i = 0; i < songLength; i++)
 		{
-			if(!(activeSongNotes.getNote[i] & placedNotes.songCardArray[i])) onFail(); 
-			else if (i == songLength - 1) onSuccess(); // Last one, all match, success!
+            if (activeSongNotes.getNote(i) != placedNotes.songCardArray[i].GetComponent<cardClass>().cardNum)
+            {
+                onFail();
+            }
+
+            else if (i == songLength - 1)
+            {
+                onSuccess(); // Last one, all match, success!
+            }
 		}
 	}
 

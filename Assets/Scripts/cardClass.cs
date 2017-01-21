@@ -19,6 +19,13 @@ public class cardClass : MonoBehaviour {
     private bool isPlayerCard;
 #pragma warning restore 649
 
+    /// <summary>
+    /// The number that corresponds to the note this card is
+    /// </summary>
+    public int cardNum
+    {
+        get { return cardNumber; }
+    }
     private void Awake()
     {
         this.gameObject.GetComponent<Image>().sprite = cardImages[cardNumber].sprite;

@@ -43,7 +43,8 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void playSong()
     {
-      //  GameObject.FindWithTag("songObj").GetComponent<SongClass>().song.PlayClip();
+      this.gameObject.GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip, 1);
+     
     }
 
     /// <summary>
