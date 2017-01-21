@@ -34,6 +34,23 @@ public class GameMaster : MonoBehaviour {
 
     private GameObject[] songCards;
 
+#pragma warning disable 649
+    [Header("Main menu and main game gameobjects ")]
+    [SerializeField]
+    [Tooltip("The main menu game object, activated and deactivated as neccessary")]
+    private GameObject mainMenu;
+    [SerializeField]
+    [Tooltip("The main game GameObject, activated and deactivated as neccessary")]
+    private GameObject mainGame;
+
+
+    //The following would be in scene manager, probably with these functions as well
+    private int currentLevel; // For referencing songList active song
+    private GameObject[] songList; // List of all songs we have 
+    private SongClass activeSongNotes;
+
+#pragma warning restore 649
+
     /// <summary>
     /// Array of cards
     /// </summary>
@@ -54,24 +71,20 @@ public class GameMaster : MonoBehaviour {
 	
 	}
 
-    private void startGame()
+    public void startGame()
     {
+        
+        mainMenu.SetActive(false);
+        mainGame.SetActive(true);
 
+        //TODO:load song up
     }
 
 
-#pragma warning disable 649
-    //The following would be in scene manager, probably with these functions as well
-    int currentLevel; // For referencing songList active song
-    GameObject[] songList; // List of all songs we have 
-    GameObject UI;
-    SongClass activeSongNotes;
-    UIManager placedNotes;
-#pragma warning restore 649
+
     private void setNoteReferences()
     {
         activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
-        placedNotes = UI.GetComponent<UIManager>();
     }
 
     /// <summary>
