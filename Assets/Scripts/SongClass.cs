@@ -4,24 +4,42 @@ using System.Collections.Generic;
 
 public class SongClass : MonoBehaviour {
 
-   /* Queue<int> NoteQueue = new Queue<int>();
-    NoteQueue.Enqueue(3); // Queue is '3'
-    NoteQueue.Enqueue(7); // QUeue is '3 -> 7'
-    NoteQueue.Enqueue(4); //Q is '3 -> 7 -> 4'
-    int temp = NoteQueue.Dequeue(); // Q is 7 -> 4*/
-
 #pragma warning disable 649
     [SerializeField]
-	[Header("Song File")]
-	private AudioClip song;
+    [Header("Note Sounds")]
+    public AudioClip[] noteSounds;
 
-	/// <summary>
-	/// Gets the song clip associated with this class
-	/// </summary>
-	/// <value>The song clip.</value>
-	public AudioClip songClip{
-		get{ return song;}
-	}
+    [SerializeField]
+    [Header("Song Tempo (Lower is Faster)")]
+    private float songTempo;
+
+    /// <summary>
+    /// Play the song clip associated with this class
+    /// </summary>
+    /// <value>The song clip.</value>
+    public void songClip()
+    {
+        // Possible to change to having a "timestamp" of sorts if we have time
+        if (!GameMaster.Instance.soundCurrentlyPlaying)
+        {
+            GameMaster.Instance.soundCurrentlyPlaying = true;
+            StartCoroutine(playSongClip());
+        }
+    }
+
+    IEnumerator playSongClip() // Helper function (coroutine)
+    {
+        AudioSource soundSource = GameMaster.Instance.gameObject.GetComponent<AudioSource>();
+        // COntinue playing through all notes, stop if the player selects a card
+        for (int i = 0; i < notes.Length && GameMaster.Instance.soundCurrentlyPlaying; i++)
+        {
+            soundSource.Stop();
+            soundSource.PlayOneShot(noteSounds[getNote(i)], 1.0f);
+            yield return new WaitForSeconds(songTempo);
+        }
+        GameMaster.Instance.soundCurrentlyPlaying = false;
+        yield return null;
+    }
 
 	[SerializeField]
 	[Header("Song Notes")]
