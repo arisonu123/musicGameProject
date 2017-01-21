@@ -4,7 +4,7 @@ using System.Collections;
 public class GameMaster : MonoBehaviour {
 #pragma warning disable 649
     private int currentLevel, songLength;
-    private SongClass activeSongNotes;
+    private SongClass activeSongNotes; 
 
     [SerializeField]
     [Header("Song List")]
@@ -20,9 +20,9 @@ public class GameMaster : MonoBehaviour {
         return currentLevel;
     }
 
-    public GameObject getSong()
+    public AudioClip getSound()
     {
-        return songList[currentLevel];
+        return songList[currentLevel].GetComponent<SongClass>().songClip;
     }
 
     public SongClass getSongNotes()
@@ -57,6 +57,8 @@ public class GameMaster : MonoBehaviour {
         // Maybe some animation here??
         currentLevel++;
         if(currentLevel < songList.Length) loadLevel();
+        // Case for no more levels here
+
     }
 
     /// <summary>
@@ -80,7 +82,6 @@ public class GameMaster : MonoBehaviour {
     private void initializeVariables()
     {
         currentLevel = 0;
-        activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
         loadLevel();
     }
 

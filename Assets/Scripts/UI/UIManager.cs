@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void playSong()
     {
-      this.gameObject.GetComponent<AudioSource>().PlayOneShot(gameManager.GetComponent<GameMaster>().getSong().GetComponent<SongClass>().songClip, 1);
+      this.gameObject.GetComponent<AudioSource>().PlayOneShot(gameManager.GetComponent<GameMaster>().getSound(), 1);
      
     }
 
