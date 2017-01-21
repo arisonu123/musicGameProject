@@ -56,9 +56,7 @@ public class UIManager : MonoBehaviour {
     public void playSong()
     {
       this.gameObject.GetComponent<AudioSource>().PlayOneShot(gameManager.GetComponent<GameMaster>().getSound(), 1);
-        cameraObj.GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip, 1);
-      this.gameObject.GetComponent<AudioSource>().PlayOneShot(gameManager.GetComponent<GameMaster>().getSong().GetComponent<SongClass>().songClip, 1);
-     
+       cameraObj.GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip, 1);     
     }
 
 
