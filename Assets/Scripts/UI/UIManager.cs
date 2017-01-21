@@ -8,6 +8,11 @@ public class UIManager : MonoBehaviour {
     [Header("Gameobjects needed for UI functions")]
     private GameObject cameraObj;
 
+    [SerializeField]
+    [Header("Game Manager Object")]
+    private GameObject gameManager;
+
+    private GameObject[] songCards;
     private cardClass currentCardSelected;
 #pragma warning restore 649
 
@@ -51,6 +56,7 @@ public class UIManager : MonoBehaviour {
     public void playSong()
     {
         cameraObj.GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip, 1);
+      this.gameObject.GetComponent<AudioSource>().PlayOneShot(gameManager.GetComponent<GameMaster>().getSong().GetComponent<SongClass>().songClip, 1);
      
     }
 

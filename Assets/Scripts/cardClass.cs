@@ -49,10 +49,7 @@ public class cardClass : MonoBehaviour {
     {
         this.gameObject.GetComponent<Image>().sprite = cardImages[cardNumber].sprite;
     }
-	// Use this for initialization
-	private void Start () {
 	
-	}
 	
 	// Update is called once per frame
 	private void Update () {

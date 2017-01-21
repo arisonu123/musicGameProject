@@ -1,7 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SongClass : MonoBehaviour {
+
+   /* Queue<int> NoteQueue = new Queue<int>();
+    NoteQueue.Enqueue(3); // Queue is '3'
+    NoteQueue.Enqueue(7); // QUeue is '3 -> 7'
+    NoteQueue.Enqueue(4); //Q is '3 -> 7 -> 4'
+    int temp = NoteQueue.Dequeue(); // Q is 7 -> 4*/
+
 #pragma warning disable 649
     [SerializeField]
 	[Header("Song File")]
