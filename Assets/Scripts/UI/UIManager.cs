@@ -3,6 +3,10 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour {
 
+    [SerializeField]
+    [Header("Game Manager Object")]
+    private GameObject gameManager;
+
     private GameObject[] songCards;
 
     /// <summary>
@@ -43,7 +47,7 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void playSong()
     {
-      this.gameObject.GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip, 1);
+      this.gameObject.GetComponent<AudioSource>().PlayOneShot(gameManager.GetComponent<GameMaster>().getSong().GetComponent<SongClass>().songClip, 1);
      
     }
 
