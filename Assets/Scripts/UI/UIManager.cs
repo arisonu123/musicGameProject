@@ -6,7 +6,7 @@ public class UIManager : MonoBehaviour {
 #pragma warning disable 649
     [SerializeField]
     [Header("Gameobjects needed for UI functions")]
-    private GameObject camera;
+    private GameObject cameraObj;
 
     [SerializeField]
     [Header("Game Manager Object")]
@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour {
     {
         EventSystem.current.currentSelectedGameObject.transform.Translate(Vector3.forward);
         currentCardSelected = EventSystem.current.currentSelectedGameObject.GetComponent<cardClass>();
-        camera.GetComponent<AudioSource>().PlayOneShot(currentCardSelected.noteAudioClips[currentCardSelected.cardNum]);
+        cameraObj.GetComponent<AudioSource>().PlayOneShot(currentCardSelected.noteAudioClips[currentCardSelected.cardNum]);
     }
 
     /// <summary>
@@ -56,16 +56,11 @@ public class UIManager : MonoBehaviour {
     public void playSong()
     {
       this.gameObject.GetComponent<AudioSource>().PlayOneShot(gameManager.GetComponent<GameMaster>().getSound(), 1);
+        cameraObj.GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip, 1);
+      this.gameObject.GetComponent<AudioSource>().PlayOneShot(gameManager.GetComponent<GameMaster>().getSong().GetComponent<SongClass>().songClip, 1);
      
     }
 
-    /// <summary>
-    /// Replay the level
-    /// </summary>
-    public void replayLevel()
-    {
-        //replay level
-    }
 
     /// <summary>
     /// Rotate the cards up
