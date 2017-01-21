@@ -19,10 +19,10 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        sourceCell = GetComponentInParent<DragAndDropCell>();                       // Remember source cell
+        //sourceCell = GetComponentInParent<DragAndDropCell>();                       // Remember source cell
         draggedItem = this;                                                        // Set as dragged item
 
-        Canvas canvas = GetComponentInParent<Canvas>();                             // Get parent canvas
+        //Canvas canvas = GetComponentInParent<Canvas>();                             // Get parent canvas
 
         if (OnItemDragStartEvent != null)
         {
