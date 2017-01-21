@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using System.Collections;
 
 public class UIManager : MonoBehaviour {
@@ -42,10 +43,12 @@ public class UIManager : MonoBehaviour {
     /// <summary>
     /// Place the card in a location
     /// </summary>
-    public void placeCard()
+    public void placeCardOnScale()
     {
         //fill data in this spot to correspond to data of dropped card
-        EventSystem.current.currentSelectedGameObject.GetComponent<cardClass>().setCardData(currentCardSelected.cardNum);
+        EventSystem.current.currentSelectedGameObject.GetComponent<cardClass>().setCardData(currentCardSelected.cardNum,true);
+        EventSystem.current.currentSelectedGameObject.GetComponent<Image>().enabled = true;
+        EventSystem.current.currentSelectedGameObject.transform.position = new Vector3(EventSystem.current.currentSelectedGameObject.transform.position.x, EventSystem.current.currentSelectedGameObject.transform.position.y + (0.3f * currentCardSelected.cardNum), 0);
 
 
     }
@@ -86,5 +89,13 @@ public class UIManager : MonoBehaviour {
             currentDisplayedCardNums[i] -= 1;
             GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(true);
         }
+    }
+
+    /// <summary>
+    /// Starts the game
+    /// </summary>
+    public void playGame()
+    {
+        GameMaster.Instance.startGame();
     }
 }

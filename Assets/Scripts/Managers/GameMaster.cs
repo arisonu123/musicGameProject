@@ -148,6 +148,9 @@ public class GameMaster : MonoBehaviour {
 	
 	}
 
+    /// <summary>
+    /// Start the game, disabled and enable game objects as needed, load song up
+    /// </summary>
     public void startGame()
     {
         
