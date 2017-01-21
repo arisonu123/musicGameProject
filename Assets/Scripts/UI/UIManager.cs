@@ -69,9 +69,9 @@ public class UIManager : MonoBehaviour {
     {
         for(int i = 0; i < currentDisplayedCardNums.Length; i++)
         {
-            songCards[currentDisplayedCardNums[i]].SetActive(false);
+            GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(false);
             currentDisplayedCardNums[i] += 1;
-            songCards[currentDisplayedCardNums[i]].SetActive(true);
+            GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(true);
         }     
        
     }
@@ -84,9 +84,9 @@ public class UIManager : MonoBehaviour {
     {
         for (int i = 0; i < currentDisplayedCardNums.Length; i++)
         {
-            songCards[currentDisplayedCardNums[i]].SetActive(false);
+            GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(false);
             currentDisplayedCardNums[i] -= 1;
-            songCards[currentDisplayedCardNums[i]].SetActive(true);
+            GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(true);
         }
     }
 }

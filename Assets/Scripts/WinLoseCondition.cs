@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class WinLoseCondition : MonoBehaviour {
-#pragma warning disable 649
+/*#pragma warning disable 649
     //The following would be in scene manager, probably with these functions as well
     int currentLevel; // For referencing songList active song
 	GameObject[] songList; // List of all songs we have 
@@ -25,7 +25,7 @@ public class WinLoseCondition : MonoBehaviour {
 
 		for(int i = 0; i < songLength; i++)
 		{
-            if (activeSongNotes.getNote(i) != placedNotes.songCardArray[i].GetComponent<cardClass>().cardNum)
+            if (activeSongNotes.getNote(i) != songCardArray[i].GetComponent<cardClass>().cardNum)
             {
                 onFail();
             }
@@ -54,5 +54,5 @@ public class WinLoseCondition : MonoBehaviour {
 	{
 		// Reset level, return cards to pool and redistribute to players
 
-	}
+	}*/
 }
