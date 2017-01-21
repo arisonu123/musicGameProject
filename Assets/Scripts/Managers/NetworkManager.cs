@@ -21,16 +21,21 @@ public class NetworkManager : MonoBehaviour {
 	void OnJoinedLobby(){
 		//create room
 		if (PhotonNetwork.room == null) {
-			PhotonNetwork.CreateRoom (roomName);
-		}
 
-		// Join Room
-		if (roomsList != null) {
-			for (int i = 0; i < roomsList.Length; i++) {
-				PhotonNetwork.JoinRoom (roomsList [i].Name);
+
+			// Join Room
+			if (roomsList != null) {
+				for (int i = 0; i < roomsList.Length; i++) {
+					PhotonNetwork.JoinRoom (roomsList [i].Name);
+				}
+
+			} else {
+				PhotonNetwork.CreateRoom (roomName);
 			}
 
+
 		}
+
 	}
 
 	void OnJoinedRoom()
