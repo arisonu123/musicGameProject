@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class SongClass : MonoBehaviour {
-
-	[SerializeField]
+#pragma warning disable 649
+    [SerializeField]
 	[Header("Song File")]
 	private AudioClip song;
 
@@ -18,12 +18,12 @@ public class SongClass : MonoBehaviour {
 	[SerializeField]
 	[Header("Song Notes")]
 	private int[] notes;
-
-	/// <summary>
-	/// Gets the note value in the select portion of the song (0 = first)
-	/// </summary>
-	/// <value>The song clip.</value>
-	public int getNote(int position)
+#pragma warning restore 649
+    /// <summary>
+    /// Gets the note value in the select portion of the song (0 = first)
+    /// </summary>
+    /// <value>The song clip.</value>
+    public int getNote(int position)
 	{
 		return notes[position];
 	}

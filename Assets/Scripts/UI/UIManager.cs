@@ -1,7 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 public class UIManager : MonoBehaviour {
+#pragma warning disable 649
+    [SerializeField]
+    [Header("Gameobjects needed for UI functions")]
+    private GameObject camera;
+
+    private cardClass currentCardSelected;
+#pragma warning restore 649
 
     private GameObject[] songCards;
 
@@ -26,12 +34,20 @@ public class UIManager : MonoBehaviour {
 	
 	}
 
-    public void dragCard()
+    /// <summary>
+    /// Selects the card, moves it up and plays its corresponding note sound clip
+    /// </summary>
+    public void selectCard()
     {
-
+        EventSystem.current.currentSelectedGameObject.transform.Translate(Vector3.forward);
+        currentCardSelected = EventSystem.current.currentSelectedGameObject.GetComponent<cardClass>();
+      //  camera.GetComponent<AudioSource>().PlayOneShot(currentCardSelected.noteAudioClips[currentCardSelected.cardNum]);
     }
 
-    public void dropCard()
+    /// <summary>
+    /// Place the card in a location
+    /// </summary>
+    public void placeCard()
     {
         //fill data in this spot to correspond to data of dropped card
 

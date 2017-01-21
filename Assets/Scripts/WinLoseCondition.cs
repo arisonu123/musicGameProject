@@ -2,15 +2,15 @@
 using System.Collections;
 
 public class WinLoseCondition : MonoBehaviour {
-
-	//The following would be in scene manager, probably with these functions as well
-	int currentLevel; // Fr referencing songList active song
+#pragma warning disable 649
+    //The following would be in scene manager, probably with these functions as well
+    int currentLevel; // For referencing songList active song
 	GameObject[] songList; // List of all songs we have 
 	GameObject UI;
 	SongClass activeSongNotes;
 	UIManager placedNotes;
-
-	private void setNoteReferences()
+#pragma warning restore 649
+    private void setNoteReferences()
 	{
 		activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
 		placedNotes = UI.GetComponent<UIManager>();
