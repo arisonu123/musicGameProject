@@ -3,43 +3,22 @@ using System.Collections;
 
 public class NetworkManager : MonoBehaviour {
 
-	private const string roomName = "RoomName";
-	private RoomInfo[] roomsList;
-
-	bool joined;
+	string _room = "backseatDriver";
 
 	// Use this for initialization
 	void Start () {
 		PhotonNetwork.ConnectUsingSettings("0.1");
 	}
 
-	void OnReceivedRoomListUpdate()
+	void OnJoinedLobby()
 	{
-		roomsList = PhotonNetwork.GetRoomList();
+
+		RoomOptions roomOptions = new RoomOptions() { };
+		PhotonNetwork.JoinOrCreateRoom(_room, roomOptions, TypedLobby.Default);
 	}
 
-	void OnJoinedLobby(){
-		//create room
-		if (PhotonNetwork.room == null) {
-
-
-			// Join Room
-			if (roomsList != null) {
-				for (int i = 0; i < roomsList.Length; i++) {
-					PhotonNetwork.JoinRoom (roomsList [i].Name);
-				}
-
-			} else {
-				PhotonNetwork.CreateRoom (roomName);
-			}
-
-
-		}
-
+	void OnJoinedRoom(){
+		print ("Joined" + _room);
 	}
 
-	void OnJoinedRoom()
-	{
-		Debug.Log("Connected to Room");
-	}
 }
