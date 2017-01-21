@@ -11,17 +11,7 @@ public class UIManager : MonoBehaviour {
     private cardClass currentCardSelected;
 #pragma warning restore 649
 
-    private GameObject[] songCards;
-
-    /// <summary>
-    /// Array of cards
-    /// </summary>
-    public GameObject[] songCardArray
-    {
-        get { return songCards; }
-
-        set { songCards = value; }
-    }
+   
 
     private int[] currentDisplayedCardNums = { 0, 1, 2, 3 };
 	// Use this for initialization
@@ -41,7 +31,7 @@ public class UIManager : MonoBehaviour {
     {
         EventSystem.current.currentSelectedGameObject.transform.Translate(Vector3.forward);
         currentCardSelected = EventSystem.current.currentSelectedGameObject.GetComponent<cardClass>();
-      //  camera.GetComponent<AudioSource>().PlayOneShot(currentCardSelected.noteAudioClips[currentCardSelected.cardNum]);
+        camera.GetComponent<AudioSource>().PlayOneShot(currentCardSelected.noteAudioClips[currentCardSelected.cardNum]);
     }
 
     /// <summary>
@@ -50,6 +40,7 @@ public class UIManager : MonoBehaviour {
     public void placeCard()
     {
         //fill data in this spot to correspond to data of dropped card
+        EventSystem.current.currentSelectedGameObject.GetComponent<cardClass>().setCardData(currentCardSelected.cardNum);
 
 
     }

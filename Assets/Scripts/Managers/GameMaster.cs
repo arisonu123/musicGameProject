@@ -3,8 +3,23 @@ using System.Collections;
 
 public class GameMaster : MonoBehaviour {
 
-	// Use this for initialization
-	private void Start () {
+    private static GameMaster instance;
+
+
+    private GameObject[] songCards;
+
+    /// <summary>
+    /// Array of cards
+    /// </summary>
+    public GameObject[] songCardArray
+    {
+        get { return songCards; }
+
+        set { songCards = value; }
+    }
+
+    // Use this for initialization
+    private void Start () {
 	
 	}
 	

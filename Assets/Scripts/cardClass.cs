@@ -42,10 +42,12 @@ public class cardClass : MonoBehaviour {
         get { return noteSounds; }
     }
 
+   
+
 
     private void Awake()
     {
-       // this.gameObject.GetComponent<Image>().sprite = cardImages[cardNumber].sprite;
+        this.gameObject.GetComponent<Image>().sprite = cardImages[cardNumber].sprite;
     }
 	// Use this for initialization
 	private void Start () {
@@ -56,4 +58,11 @@ public class cardClass : MonoBehaviour {
 	private void Update () {
 	
 	}
+
+
+    public void setCardData(int noteNumber)
+    {
+        cardNumber = noteNumber;
+        this.gameObject.GetComponent<Image>().sprite = cardImages[cardNumber].sprite;
+    }
 }
