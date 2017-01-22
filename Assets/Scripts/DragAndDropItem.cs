@@ -17,11 +17,12 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     static public event DragEvent OnItemDragStartEvent;                             // Drag start event
     static public event DragEvent OnItemDragEndEvent;                               // Drag end event
 
-
+	private Vector2 origPos;
 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+		origPos = gameObject.transform.position;
         //sourceCell = GetComponentInParent<DragAndDropCell>();                       // Remember source cell
         draggedItem = this;                                                        // Set as dragged item
 
@@ -41,6 +42,7 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		
     public void OnEndDrag(PointerEventData eventData)
     {
+		gameObject.transform.position = origPos;
         if (icon != null)
         {
             Destroy(icon);                                                          // Destroy icon on item drop
