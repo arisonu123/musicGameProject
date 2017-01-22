@@ -39,7 +39,7 @@ public class PlayerHand : MonoBehaviour {
 
             Card.GetComponent<cardClass>().setCardNumber(GameMaster.Instance.getNextCard());
             Card.GetComponent<cardClass>().setPlaceInHand(handPlacement);
-			Card.GetComponent<PhotonView> ().viewID = handPlacement + 1;
+			//Card.GetComponent<PhotonView> ().viewID = handPlacement + 1;
             RotateCard(handPlacement, Card);
         }
     }
