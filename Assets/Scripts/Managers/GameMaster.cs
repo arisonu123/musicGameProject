@@ -6,7 +6,9 @@ public class GameMaster : MonoBehaviour {
 
 #pragma warning disable 649
     private int currentLevel, songLength;
+    [SerializeField]
     private SongClass activeSongNotes;
+    [SerializeField]
     private GameObject activeSongObj;
     public bool soundCurrentlyPlaying = false;
 
@@ -21,6 +23,28 @@ public class GameMaster : MonoBehaviour {
     [SerializeField]
     [Header("Player Hand Object for Reference")]
     private GameObject playerHand;
+
+    [SerializeField]
+    [Header("Base song card slots, will be duplicated as needed")]
+    private GameObject[] baseCardSlots;
+
+
+    [SerializeField]
+    private GameObject[] songCards;
+
+#pragma warning disable 649
+    [Header("Main menu and main game gameobjects ")]
+    [SerializeField]
+    [Tooltip("The main menu game object, activated and deactivated as neccessary")]
+    private GameObject mainMenu;
+    [SerializeField]
+    [Tooltip("The main game GameObject, activated and deactivated as neccessary")]
+    private GameObject mainGame;
+
+
+
+#pragma warning restore 649
+
 #pragma warning restore 649
 
     // Shaun got lazy and wanted easy access to this for returning cards to player hand
@@ -116,16 +140,25 @@ public class GameMaster : MonoBehaviour {
     public void compareNotes()
     {
         Debug.Log("Comparing Notes....");
-        for (int i = 0; i < songLength; i++)
+        if (songCards.Length == songLength&&activeSongNotes!=null)
         {
-            if (activeSongNotes.getNote(i) != songCardArray[i].GetComponent<cardClass>().cardNum)
+            for (int i = 0; i < songLength; i++)
             {
-                onFail();
-            }
+                Debug.LogWarning(activeSongNotes.getNote(i));
+                Debug.LogWarning(songCards[i]);
+                if (songCards[i].transform.childCount != 0)
+                {
+                    if (activeSongNotes.getNote(i) != songCards[i].GetComponent<cardClass>().cardNum)
+                    {
+                        onFail();
+                    }
 
-            else if (i == songLength - 1)
-            {
-                onSuccess(); // Last one, all match, success!
+
+                    else if (i == songLength - 1)
+                    {
+                        onSuccess(); // Last one, all match, success!
+                    }
+                }
             }
         }
     }
@@ -164,11 +197,31 @@ public class GameMaster : MonoBehaviour {
     {
         activeSongNotes = getCurrentSong().GetComponent<SongClass>();
         Debug.Log("Loading new level");
-        activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
+        //activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
         songLength = activeSongNotes.getSongLength();
         Debug.Log("Song Length is " + songLength.ToString());
         createNotePool(); // Sets up the pool of notes for players to use
         songCards = new GameObject[songLength];
+        songCards[0] = baseCardSlots[0];
+        songCards[1] = baseCardSlots[1];
+        songCards[2] = baseCardSlots[2];
+        songCards[3] = baseCardSlots[3];
+        if (songCards.Length > 4)
+        {
+            for(int i = 3; i < ((songCards.Length / 4) - 4); i+=4)
+            {
+
+                songCards[i] = Instantiate(baseCardSlots[0], baseCardSlots[0].transform.position, Quaternion.identity)as GameObject;
+                songCards[i].SetActive(false);
+                songCards[i+1] = Instantiate(baseCardSlots[1], baseCardSlots[1].transform.position, Quaternion.identity) as GameObject;
+                songCards[i + 1].SetActive(false);
+                songCards[i+2] = Instantiate(baseCardSlots[2], baseCardSlots[2].transform.position, Quaternion.identity) as GameObject;
+                songCards[i + 2].SetActive(false);
+                songCards[i+3] = Instantiate(baseCardSlots[3], baseCardSlots[3].transform.position, Quaternion.identity) as GameObject;
+                songCards[i + 3].SetActive(false);
+            }
+        }
+        
     }
 
     private void initializeVariables()
@@ -206,21 +259,6 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
-    [SerializeField]
-    private GameObject[] songCards;
-
-#pragma warning disable 649
-    [Header("Main menu and main game gameobjects ")]
-    [SerializeField]
-    [Tooltip("The main menu game object, activated and deactivated as neccessary")]
-    private GameObject mainMenu;
-    [SerializeField]
-    [Tooltip("The main game GameObject, activated and deactivated as neccessary")]
-    private GameObject mainGame;
-
-
-
-#pragma warning restore 649
 
     /// <summary>
     /// Array of cards currently placed by players
@@ -234,12 +272,19 @@ public class GameMaster : MonoBehaviour {
 
     private bool allCardsPlaced()
     {
-        for(int i = 0; i < songLength; i++)
+        if (songCardArray != null&&songLength!=0)
         {
-            if (songCardArray[i] == null) return false;
+            for (int i = 0; i < songLength; i++)
+            {
+                if (songCardArray[i].transform.childCount != 0)
+                {
+                    /*if (songCardArray[i] == null)*/ return false;
+                }
+            }
+            Debug.Log("All notes placed!");
+            return true;
         }
-        Debug.Log("All notes placed!");
-        return true;
+        return false;
     }
 
     // Use this for initialization
@@ -262,6 +307,7 @@ public class GameMaster : MonoBehaviour {
         if (mainGame.activeInHierarchy)
         {
             songCards = GameObject.FindGameObjectsWithTag("scaleSocket");
+            if(activeSongObj)
             if (songCards.Length == 4)
             {
                 UIManager.Instance.upButObj.SetActive(false);

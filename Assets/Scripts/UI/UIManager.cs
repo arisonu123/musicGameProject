@@ -135,21 +135,25 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void rotateCardsUp()
     {
-        for(int i = 0; i < currentDisplayedCardNums.Length; i++)
+
+        if (currentDisplayedCardNums[3] != GameMaster.Instance.songCardArray.Length-1)
         {
-            // Has no proper place to display these, we need to implement this.
-            GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(false);
-            currentDisplayedCardNums[i] += 4;
-            GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(true);
-            if(currentDisplayedCardNums[i] == GameMaster.Instance.songCardArray.Length)
+            for (int i = 0; i < currentDisplayedCardNums.Length; i++)
             {
-                upButtonObj.SetActive(false);
-                if (downButtonObj.activeInHierarchy == false)
+                // Has no proper place to display these, we need to implement this.
+                GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(false);
+                currentDisplayedCardNums[i] += 4;
+                GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(true);
+                if (currentDisplayedCardNums[i] == GameMaster.Instance.songCardArray.Length-1)
                 {
-                    downButtonObj.SetActive(true);
+                    upButtonObj.SetActive(false);
+                    if (downButtonObj.activeInHierarchy == false)
+                    {
+                        downButtonObj.SetActive(true);
+                    }
                 }
             }
-        }   
+        }  
           
        
     }
@@ -160,18 +164,20 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void rotateCardsDown()
     {
-        
-        for (int i = 0; i < currentDisplayedCardNums.Length; i++)
+        if (currentDisplayedCardNums[0] != 0)
         {
-            GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(false);
-            currentDisplayedCardNums[i] -= 4;
-            GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(true);
-            if (currentDisplayedCardNums[i] == 0)
+            for (int i = 0; i < currentDisplayedCardNums.Length; i++)
             {
-                downButtonObj.SetActive(false);
-                if (upButtonObj.activeInHierarchy == false)
+                GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(false);
+                currentDisplayedCardNums[i] -= 4;
+                GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(true);
+                if (currentDisplayedCardNums[i] == 0)
                 {
-                    upButtonObj.SetActive(true);
+                    downButtonObj.SetActive(false);
+                    if (upButtonObj.activeInHierarchy == false)
+                    {
+                        upButtonObj.SetActive(true);
+                    }
                 }
             }
         }
