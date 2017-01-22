@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class sonia_Script : MonoBehaviour {
+/*
 
 public Queue<int> NoteQueue;
 
@@ -38,5 +39,5 @@ NoteQueue = new Queue<int>();
 		NoteQueue.Enqueque(i);
 	}
 
-
+    */
 }
