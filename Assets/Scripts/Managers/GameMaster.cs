@@ -142,13 +142,13 @@ public class GameMaster : MonoBehaviour {
         Debug.Log("Comparing Notes....");
         if (songCards.Length == songLength&&activeSongNotes!=null)
         {
+
             for (int i = 0; i < songLength; i++)
             {
-                Debug.LogWarning(activeSongNotes.getNote(i));
-                Debug.LogWarning(songCards[i]);
+               
                 if (songCards[i].transform.childCount != 0)
                 {
-                    if (activeSongNotes.getNote(i) != songCards[i].GetComponent<cardClass>().cardNum)
+                    if (activeSongNotes.getNote(i) != songCards[i].transform.GetChild(0).GetComponent<cardClass>().cardNum)
                     {
                         onFail();
                     }
@@ -156,6 +156,7 @@ public class GameMaster : MonoBehaviour {
 
                     else if (i == songLength - 1)
                     {
+
                         onSuccess(); // Last one, all match, success!
                     }
                 }
@@ -168,9 +169,20 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     private void onSuccess()
     {
-        Debug.Log("Level Complete!");
+
         // Maybe some animation here??
-        currentLevel++;
+        foreach (GameObject item in songCards)
+        {
+            if (item.transform.childCount != 0)
+            {
+                Destroy(item.transform.GetChild(0).gameObject);
+            }
+        }
+        Destroy(activeSongObj);
+        activeSongObj = null;
+        currentLevel+=1;
+        Debug.LogWarning(currentLevel + "is the current level");
+        Debug.LogWarning("song list length is" + songList.Length);
         if (currentLevel < songList.Length) loadLevel();
         // Case for no more levels here
         else
@@ -187,6 +199,14 @@ public class GameMaster : MonoBehaviour {
     {
         Debug.Log("Level Failure... Resetting Level!");
         //Maybe some animation here??
+        foreach(GameObject item in songCards)
+        {
+            if (item.transform.childCount != 0)
+            {
+                Destroy(item.transform.GetChild(0).gameObject);
+            }
+        }
+        Destroy(activeSongObj);
         loadLevel();
     }
 
@@ -196,10 +216,11 @@ public class GameMaster : MonoBehaviour {
     private void loadLevel()
     {
         activeSongNotes = getCurrentSong().GetComponent<SongClass>();
-        Debug.Log("Loading new level");
+       
         //activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
         songLength = activeSongNotes.getSongLength();
-        Debug.Log("Song Length is " + songLength.ToString());
+
+        UIManager.Instance.playSong();
         createNotePool(); // Sets up the pool of notes for players to use
         songCards = new GameObject[songLength];
         songCards[0] = baseCardSlots[0];
@@ -276,8 +297,9 @@ public class GameMaster : MonoBehaviour {
         {
             for (int i = 0; i < songLength; i++)
             {
-                if (songCardArray[i].transform.childCount != 0)
+                if (songCardArray[i].transform.childCount == 0)
                 {
+                    //Debug.Log("Returnin false to all cards placed");
                     /*if (songCardArray[i] == null)*/ return false;
                 }
             }
@@ -289,7 +311,7 @@ public class GameMaster : MonoBehaviour {
 
     // Use this for initialization
     private void Start () {
-        initializeVariables();
+        //initializeVariables();
 	
 	}
 	
@@ -300,12 +322,14 @@ public class GameMaster : MonoBehaviour {
 
     private void toggleMenu()
     {
+        Debug.LogWarning("toggles");
         mainMenu.SetActive(!mainMenu.activeInHierarchy);
         mainGame.SetActive(!mainGame.activeInHierarchy);
 
         //fill song card array
         if (mainGame.activeInHierarchy)
         {
+            initializeVariables();
             songCards = GameObject.FindGameObjectsWithTag("scaleSocket");
             if(activeSongObj)
             if (songCards.Length == 4)

@@ -94,7 +94,7 @@ public class UIManager : MonoBehaviour {
     {
         cardClass currentCard = droppedCard.GetComponent<cardClass>();
         currentCard.setCardData(currentCard.cardNum, true);
-        GameMaster.Instance.songCardArray[/*Needs code for determining which array spot it's in*/3] = droppedCard;
+       // GameMaster.Instance.songCardArray[/*Needs code for determining which array spot it's in*/3] = droppedCard;
     }
 
     
