@@ -56,10 +56,14 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void playSong()
     {
-      this.gameObject.GetComponent<AudioSource>().PlayOneShot(GameMaster.Instance.getSound(), 1);
-       cameraObj.GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip, 1);     
+        GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip();
+
     }
 
+    public void playSound(GameObject card)
+    {
+        GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
+    }
 
     /// <summary>
     /// Rotate the cards up

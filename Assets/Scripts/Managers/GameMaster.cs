@@ -4,7 +4,8 @@ using System.Collections;
 public class GameMaster : MonoBehaviour {
 #pragma warning disable 649
     private int currentLevel, songLength;
-    private SongClass activeSongNotes; 
+    private SongClass activeSongNotes;
+    public bool soundCurrentlyPlaying = false;
 
     [SerializeField]
     [Header("Song List")]
@@ -22,8 +23,9 @@ public class GameMaster : MonoBehaviour {
 
     public AudioClip getSound()
     {
-        return songList[currentLevel].GetComponent<SongClass>().songClip;
+       return songList[currentLevel].GetComponent<SongClass>().noteSounds[0];
     }
+
 
     public SongClass getSongNotes()
     {
