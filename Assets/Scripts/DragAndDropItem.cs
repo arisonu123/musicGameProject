@@ -32,7 +32,6 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
 	public void OnEndDrag (PointerEventData eventData)
 	{
-		print ("test");
 		itemBeingDragged = null;
 		//GetComponent<CanvasGroup>().blocksRaycasts = true;
 		if(transform.parent == startParent){
