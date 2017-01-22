@@ -6,6 +6,7 @@ public class GameMaster : MonoBehaviour {
 #pragma warning disable 649
     private int currentLevel, songLength;
     private SongClass activeSongNotes;
+    private GameObject activeSongObj;
     public bool soundCurrentlyPlaying = false;
 
     [SerializeField]
@@ -16,6 +17,15 @@ public class GameMaster : MonoBehaviour {
     [Header("Placed Notes Array Object")]
     private GameObject UI;
 #pragma warning restore 649
+
+    public GameObject getCurrentSong()
+    {
+        if (activeSongObj == null)
+        {
+            activeSongObj = GameObject.Instantiate(songList[currentLevel]);
+        }
+        return activeSongObj;
+    }
 
     public int getCurrentLevel()
     {
@@ -83,8 +93,9 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     private void loadLevel()
     {
-     //   activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
+        //   activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
         //songLength = activeSongNotes.getSongLength();
+        
     }
 
     private void initializeVariables()
