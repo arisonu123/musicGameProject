@@ -113,7 +113,6 @@ public class UIManager : MonoBehaviour {
         {
           
             playingSound = true;
-            soundPlayCheck(card);
             StartCoroutine(soundPlayCheck(card));
         }
         
