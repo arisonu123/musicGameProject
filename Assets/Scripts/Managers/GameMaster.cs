@@ -133,6 +133,7 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    [SerializeField]
     private GameObject[] songCards;
 
 #pragma warning disable 649
@@ -143,6 +144,8 @@ public class GameMaster : MonoBehaviour {
     [SerializeField]
     [Tooltip("The main game GameObject, activated and deactivated as neccessary")]
     private GameObject mainGame;
+
+
 
 #pragma warning restore 649
 
@@ -171,6 +174,18 @@ public class GameMaster : MonoBehaviour {
     {
         mainMenu.SetActive(!mainMenu.activeInHierarchy);
         mainGame.SetActive(!mainGame.activeInHierarchy);
+
+        //fill song card array
+        if (mainGame.activeInHierarchy)
+        {
+            songCards = GameObject.FindGameObjectsWithTag("scaleSocket");
+            if (songCards.Length == 4)
+            {
+                UIManager.Instance.upButObj.SetActive(false);
+                
+            }
+            UIManager.Instance.downButObj.SetActive(false);
+        }
     }
 
     /// <summary>

@@ -14,7 +14,7 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		itemBeingDragged = gameObject;
 		startPosition = transform.position;
 		startParent = transform.parent;
-
+        UIManager.Instance.currentCardChosen = this.gameObject.GetComponent<cardClass>();
         UIManager.Instance.playSound(this.gameObject);
 //		GetComponent<CanvasGroup>().blocksRaycasts = false;
 

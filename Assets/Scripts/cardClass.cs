@@ -47,8 +47,11 @@ public class cardClass : MonoBehaviour {
 
     private void Awake()
     {
-        int cardNumber = Random.Range(0, 10);
-        this.gameObject.GetComponent<Image>().sprite = cardImages[0];
+        if (isPlayerCard)
+        {
+            int cardNumber = Random.Range(0, 10);
+            this.gameObject.GetComponent<Image>().sprite = cardImages[0];
+        }
         
     }
 	
