@@ -6,8 +6,8 @@ public class cardClass : MonoBehaviour {
 #pragma warning disable 649
     [Header("Possible Card Images")]
     [SerializeField]
-    [Tooltip("Images to display on the cards,should be size 8")]
-    private Sprite[] cardImages=new Sprite[8];
+    [Tooltip("Images to display on the cards")]
+    private Sprite cardImage;
     [SerializeField]
     [Tooltip("Image to display when placed on scale")]
     private Sprite scaleNoteImage;
@@ -25,7 +25,19 @@ public class cardClass : MonoBehaviour {
     [SerializeField]
     [Tooltip("Determines whether or not this card is a player card or a card to match to")]
     private bool isPlayerCard = true;
+
+    private int placeInHand;
 #pragma warning restore 649
+
+    public int getPlaceInHand()
+    {
+        return placeInHand;
+    }
+
+    public void setPlaceInHand(int p)
+    {
+        placeInHand = p;
+    }
 
     /// <summary>
     /// The number that corresponds to the note this card is
@@ -41,6 +53,11 @@ public class cardClass : MonoBehaviour {
         cardNumber = num;
     }
 
+    public bool isNote()
+    {
+        return !isPlayerCard;
+    }
+
     /// <summary>
     /// The array of note audio clips
     /// </summary>
@@ -54,17 +71,11 @@ public class cardClass : MonoBehaviour {
     {
         if (isPlayerCard)
         {
-            int cardNumber = Random.Range(0, 10);
-            this.gameObject.GetComponent<Image>().sprite = cardImages[0];
+            this.gameObject.GetComponent<Image>().sprite = cardImage;
         }
         
     }
 	
-	
-	// Update is called once per frame
-	private void Update () {
-	
-	}
 
 
     /// <summary>
@@ -80,7 +91,7 @@ public class cardClass : MonoBehaviour {
         }
         else
         {
-            this.gameObject.GetComponent<Image>().sprite = cardImages[cardNumber];
+            this.gameObject.GetComponent<Image>().sprite = cardImage;
         }
         isPlayerCard = !isPlayerCard;
     }

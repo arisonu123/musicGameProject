@@ -9,6 +9,7 @@ public class PlayerHand : MonoBehaviour {
     public Vector2[] MinPlacementValuesLtR;
     public Vector2[] MaxPlacementValuesLtR;
     public Vector3 CardScale;
+    public Transform parentOfCardsInHand; // Apparently gets mad when actually made a child of hand
 
     private void Start()
     {
@@ -29,14 +30,15 @@ public class PlayerHand : MonoBehaviour {
     /// </summary>
     void CreateCard(int handPlacement)
     {
-        if (/*Cards in Pool*/ true)
+        if (GameMaster.Instance.queueSize() != 0)
         {
             GameObject Card = (GameObject)Instantiate(DefaultCard);
-            Card.transform.parent = this.transform;
+            Card.transform.parent = parentOfCardsInHand;
             Card.transform.localScale = CardScale;
             CardsInHand[handPlacement] = Card;
 
-            Card.GetComponent<cardClass>().setCardNumber(/*GameMaster.Instance.getNextCard()*/1);
+            Card.GetComponent<cardClass>().setCardNumber(GameMaster.Instance.getNextCard());
+            Card.GetComponent<cardClass>().setPlaceInHand(handPlacement);
             RotateCard(handPlacement, Card);
         }
     }
@@ -51,5 +53,35 @@ public class PlayerHand : MonoBehaviour {
         Card.transform.GetComponent<RectTransform>().offsetMax = MaxPlacementValuesLtR[handPlacement];
     }
 
+    public void removeCardFromHand(int placeInHand)
+    {
+        if (CardsInHand[placeInHand] != null) CardsInHand[placeInHand] = null;
+    }
 
+    public void returnCardToHand(GameObject card)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (CardsInHand[i] == null)
+            {
+                cardClass temp = card.GetComponent<cardClass>();
+                CardsInHand[i] = card;
+                temp.setPlaceInHand(i);
+                temp.setCardData(temp.cardNum, false);
+                card.transform.parent = parentOfCardsInHand;
+                RotateCard(i, card);
+
+                break;
+            }
+        }
+    }
+
+    public bool handFull()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (CardsInHand[i] == null) return false;
+        }
+        return true;
+    }
 }
