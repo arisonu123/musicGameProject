@@ -104,10 +104,7 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void playSong()
     {
-
-        GameMaster.Instance.getCurrentSong().gameObject.GetComponent<SongClass>().songClip();
-        
-               
+      GameMaster.Instance.getCurrentSong().gameObject.GetComponent<SongClass>().songClip();         
     }
 
     public void playSound(GameObject card)
@@ -116,6 +113,7 @@ public class UIManager : MonoBehaviour {
         {
           
             playingSound = true;
+            soundPlayCheck(card);
             StartCoroutine(soundPlayCheck(card));
         }
         

@@ -36,6 +36,11 @@ public class cardClass : MonoBehaviour {
         get { return cardNumber; }
     }
 
+    public void setCardNumber(int num)
+    {
+        cardNumber = num;
+    }
+
     /// <summary>
     /// The array of note audio clips
     /// </summary>
