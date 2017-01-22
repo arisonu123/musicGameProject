@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour {
     public void placeCardOnScale()
     {
         //fill data in this spot to correspond to data of dropped card
-        EventSystem.current.currentSelectedGameObject.GetComponent<cardClass>().setCardData(currentCardSelected.cardNum);
+
         EventSystem.current.currentSelectedGameObject.GetComponent<cardClass>().setCardData(currentCardSelected.cardNum,true);
         EventSystem.current.currentSelectedGameObject.GetComponent<Image>().enabled = true;
         EventSystem.current.currentSelectedGameObject.transform.position = new Vector3(EventSystem.current.currentSelectedGameObject.transform.position.x, EventSystem.current.currentSelectedGameObject.transform.position.y + (0.3f * currentCardSelected.cardNum), 0);
@@ -60,9 +60,7 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void playSong()
     {
-       GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip();     
-      this.gameObject.GetComponent<AudioSource>().PlayOneShot(GameMaster.Instance.getSound(), 1);
-       cameraObj.GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip, 1);     
+       GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip();          
     }
 
 
