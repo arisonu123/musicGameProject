@@ -160,6 +160,9 @@ public class GameMaster : MonoBehaviour {
         mainGame.SetActive(!mainGame.activeInHierarchy);
     }
 
+    /// <summary>
+    /// Start the game, disabled and enable game objects as needed, load song up
+    /// </summary>
     public void startGame()
     {
 

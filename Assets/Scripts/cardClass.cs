@@ -7,7 +7,10 @@ public class cardClass : MonoBehaviour {
     [Header("Possible Card Images")]
     [SerializeField]
     [Tooltip("Images to display on the cards,should be size 8")]
-    private Image[] cardImages=new Image[8];
+    private Sprite[] cardImages=new Sprite[8];
+    [SerializeField]
+    [Tooltip("Image to display when placed on scale")]
+    private Sprite scaleNoteImage;
 
     [Header("Sounds for different cards/notes")]
     [SerializeField]
@@ -21,7 +24,7 @@ public class cardClass : MonoBehaviour {
   
     [SerializeField]
     [Tooltip("Determines whether or not this card is a player card or a card to match to")]
-    private bool isPlayerCard;
+    private bool isPlayerCard = true;
 #pragma warning restore 649
 
     /// <summary>
@@ -47,7 +50,7 @@ public class cardClass : MonoBehaviour {
 
     private void Awake()
     {
-        this.gameObject.GetComponent<Image>().sprite = cardImages[cardNumber].sprite;
+        this.gameObject.GetComponent<Image>().sprite = cardImages[cardNumber];
     }
 	
 	
@@ -57,9 +60,21 @@ public class cardClass : MonoBehaviour {
 	}
 
 
-    public void setCardData(int noteNumber)
+    /// <summary>
+    /// Set card data
+    /// </summary>
+    /// <param name="noteNumber">Number note that this card should correspond to</param>
+    public void setCardData(int noteNumber,bool isOnScale)
     {
         cardNumber = noteNumber;
-        this.gameObject.GetComponent<Image>().sprite = cardImages[cardNumber].sprite;
+        if (isOnScale)
+        {
+            this.gameObject.GetComponent<Image>().sprite = scaleNoteImage;
+        }
+        else
+        {
+            this.gameObject.GetComponent<Image>().sprite = cardImages[cardNumber];
+        }
+        isPlayerCard = !isPlayerCard;
     }
 }
