@@ -88,13 +88,16 @@ public class UIManager : MonoBehaviour {
         {
             GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
             playingSound = true;
+            soundPlayCheck();
         }
-        soundPlayCheck();
+        
     }
 
     private IEnumerator soundPlayCheck()
     {
-        while( GameMaster.Instance.gameObject.GetComponent<AudioSource>().isPlaying)
+        //AudioClip clipToPlay = GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
+        playingSound = true;
+        while ( GameMaster.Instance.gameObject.GetComponent<AudioSource>().isPlaying)
         {
             yield return new WaitForEndOfFrame();
         }
