@@ -9,6 +9,7 @@ public class PlayerHand : MonoBehaviour {
     public Vector2[] MinPlacementValuesLtR;
     public Vector2[] MaxPlacementValuesLtR;
     public Vector3 CardScale;
+    public Transform parentOfCardsInHand; // Apparently gets mad when actually made a child of hand
 
     private void Start()
     {
@@ -29,14 +30,14 @@ public class PlayerHand : MonoBehaviour {
     /// </summary>
     void CreateCard(int handPlacement)
     {
-        if (/*Cards in Pool*/ true)
+        if (GameMaster.Instance.queueSize() != 0)
         {
             GameObject Card = (GameObject)Instantiate(DefaultCard);
-            Card.transform.parent = this.transform;
+            Card.transform.parent = parentOfCardsInHand;
             Card.transform.localScale = CardScale;
             CardsInHand[handPlacement] = Card;
 
-            Card.GetComponent<cardClass>().setCardNumber(/*GameMaster.Instance.getNextCard()*/1);
+            Card.GetComponent<cardClass>().setCardNumber(GameMaster.Instance.getNextCard());
             RotateCard(handPlacement, Card);
         }
     }
