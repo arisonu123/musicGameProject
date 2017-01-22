@@ -34,8 +34,16 @@ public class SongClass : MonoBehaviour {
         for (int i = 0; i < notes.Length && GameMaster.Instance.soundCurrentlyPlaying; i++)
         {
             soundSource.Stop();
-            soundSource.PlayOneShot(noteSounds[getNote(i)], 1.0f);
-            yield return new WaitForSeconds(songTempo);
+            if (notes != null)
+            {
+                soundSource.PlayOneShot(noteSounds[getNote(i)], 1.0f);
+
+                yield return new WaitForSeconds(songTempo);
+            }
+            else
+            {
+                break;
+            }
         }
         GameMaster.Instance.soundCurrentlyPlaying = false;
         yield return null;

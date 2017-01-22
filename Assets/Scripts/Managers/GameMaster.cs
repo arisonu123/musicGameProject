@@ -110,10 +110,25 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     public GameObject getCurrentSong()
     {
-        if (activeSongObj == null)
+        Debug.Log(GameObject.FindGameObjectWithTag("songObj"));
+        
+        if (activeSongObj==null)
         {
             activeSongObj = GameObject.Instantiate(songList[currentLevel]);
         }
+     /*   activeSongObj = GameObject.Instantiate(songList[currentLevel]);
+        GameObject[] songObjs = GameObject.FindGameObjectsWithTag("songObj");
+        activeSongObj = songObjs[songObjs.Length - 1];
+        for(int i = 0; i < songObjs.Length - 1; i++)
+        {
+            Destroy(songObjs[i]);
+        }
+        /* else if(!activeSongObj.name.Contains(currentLevel.ToString()))
+         {
+             activeSongObj = GameObject.Instantiate(songList[currentLevel]);
+         }*/
+        //activeSongObj = GameObject.Instantiate(songList[currentLevel]);
+        //activeSongObj = GameObject.Instantiate(songList[currentLevel]);
         return activeSongObj;
     }
 
@@ -169,7 +184,7 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     private void onSuccess()
     {
-
+        Debug.Log("fix siht");
         // Maybe some animation here??
         foreach (GameObject item in songCards)
         {
@@ -178,8 +193,10 @@ public class GameMaster : MonoBehaviour {
                 Destroy(item.transform.GetChild(0).gameObject);
             }
         }
+
         Destroy(activeSongObj);
         activeSongObj = null;
+        
         currentLevel+=1;
         Debug.LogWarning(currentLevel + "is the current level");
         Debug.LogWarning("song list length is" + songList.Length);
@@ -207,6 +224,7 @@ public class GameMaster : MonoBehaviour {
             }
         }
         Destroy(activeSongObj);
+        activeSongObj = null;
         loadLevel();
     }
 
@@ -215,33 +233,62 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     private void loadLevel()
     {
+
+        GameMaster.instance.soundCurrentlyPlaying = false;
         activeSongNotes = getCurrentSong().GetComponent<SongClass>();
-       
+
         //activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
         songLength = activeSongNotes.getSongLength();
 
         UIManager.Instance.playSong();
         createNotePool(); // Sets up the pool of notes for players to use
+        if (songCards.Length > 4)
+        {
+            for (int i = 4; i < songCards.Length; i++)
+            {
+
+                Destroy(songCards[i]);
+
+            }
+        }
+              
         songCards = new GameObject[songLength];
         songCards[0] = baseCardSlots[0];
         songCards[1] = baseCardSlots[1];
         songCards[2] = baseCardSlots[2];
         songCards[3] = baseCardSlots[3];
+        songCards[0].SetActive(true);
+        songCards[1].SetActive(true);
+        songCards[2].SetActive(true);
+        songCards[3].SetActive(true);
         if (songCards.Length > 4)
         {
-            for(int i = 3; i < ((songCards.Length / 4) - 4); i+=4)
-            {
+            Debug.Log("getting cards slots made");
 
-                songCards[i] = Instantiate(baseCardSlots[0], baseCardSlots[0].transform.position, Quaternion.identity)as GameObject;
+            for (int i = 4; i < songCards.Length; i+=4)
+            {
+                Debug.Log("make stuff happen pls");
+                songCards[i] = Instantiate(baseCardSlots[0], baseCardSlots[0].transform.position, Quaternion.identity) as GameObject;
+                songCards[i].transform.SetParent(UI.transform);
+                Destroy(songCards[i].transform.GetChild(0).gameObject);
                 songCards[i].SetActive(false);
-                songCards[i+1] = Instantiate(baseCardSlots[1], baseCardSlots[1].transform.position, Quaternion.identity) as GameObject;
+                songCards[i+1] = (GameObject)Instantiate(baseCardSlots[1], baseCardSlots[1].transform.position, Quaternion.identity);
+                songCards[i+1].transform.SetParent(UI.transform);
+                Destroy(songCards[i+1].transform.GetChild(0).gameObject);
                 songCards[i + 1].SetActive(false);
-                songCards[i+2] = Instantiate(baseCardSlots[2], baseCardSlots[2].transform.position, Quaternion.identity) as GameObject;
+                songCards[i+2] = (GameObject)Instantiate(baseCardSlots[2], baseCardSlots[2].transform.position, Quaternion.identity);
+                songCards[i+2].transform.SetParent(UI.transform);
+                Destroy(songCards[i+2].transform.GetChild(0).gameObject);
                 songCards[i + 2].SetActive(false);
-                songCards[i+3] = Instantiate(baseCardSlots[3], baseCardSlots[3].transform.position, Quaternion.identity) as GameObject;
+                songCards[i+3] = (GameObject)Instantiate(baseCardSlots[3], baseCardSlots[3].transform.position, Quaternion.identity);
+                songCards[i+3].transform.SetParent(UI.transform);
+                Destroy(songCards[i+3].transform.GetChild(0).gameObject);
                 songCards[i + 3].SetActive(false);
             }
+            UIManager.Instance.upButObj.SetActive(true);
+            UIManager.Instance.downButObj.SetActive(false);
         }
+   
         
     }
 
@@ -297,6 +344,7 @@ public class GameMaster : MonoBehaviour {
         {
             for (int i = 0; i < songLength; i++)
             {
+
                 if (songCardArray[i].transform.childCount == 0)
                 {
                     //Debug.Log("Returnin false to all cards placed");
