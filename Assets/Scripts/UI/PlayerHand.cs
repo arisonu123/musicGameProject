@@ -38,6 +38,7 @@ public class PlayerHand : MonoBehaviour {
             CardsInHand[handPlacement] = Card;
 
             Card.GetComponent<cardClass>().setCardNumber(GameMaster.Instance.getNextCard());
+            Card.GetComponent<cardClass>().setPlaceInHand(handPlacement);
             RotateCard(handPlacement, Card);
         }
     }
@@ -52,5 +53,35 @@ public class PlayerHand : MonoBehaviour {
         Card.transform.GetComponent<RectTransform>().offsetMax = MaxPlacementValuesLtR[handPlacement];
     }
 
+    public void removeCardFromHand(int placeInHand)
+    {
+        if (CardsInHand[placeInHand] != null) CardsInHand[placeInHand] = null;
+    }
 
+    public void returnCardToHand(GameObject card)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (CardsInHand[i] == null)
+            {
+                cardClass temp = card.GetComponent<cardClass>();
+                CardsInHand[i] = card;
+                temp.setPlaceInHand(i);
+                temp.setCardData(temp.cardNum, false);
+                card.transform.parent = parentOfCardsInHand;
+                RotateCard(i, card);
+
+                break;
+            }
+        }
+    }
+
+    public bool handFull()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (CardsInHand[i] == null) return false;
+        }
+        return true;
+    }
 }

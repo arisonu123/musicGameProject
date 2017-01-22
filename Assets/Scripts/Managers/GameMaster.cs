@@ -17,7 +17,18 @@ public class GameMaster : MonoBehaviour {
     [SerializeField]
     [Header("Placed Notes Array Object")]
     private GameObject UI;
+
+    [SerializeField]
+    [Header("Player Hand Object for Reference")]
+    private GameObject playerHand;
 #pragma warning restore 649
+
+    // Shaun got lazy and wanted easy access to this for returning cards to player hand
+    // #spaghetti code for Global Game Jam
+    public PlayerHand getPlayerHand()
+    {
+        return playerHand.GetComponent<PlayerHand>();
+    }
 
     public Queue<int> NoteQueue;
 
@@ -104,6 +115,7 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     public void compareNotes()
     {
+        Debug.Log("Comparing Notes....");
         for (int i = 0; i < songLength; i++)
         {
             if (activeSongNotes.getNote(i) != songCardArray[i].GetComponent<cardClass>().cardNum)
@@ -123,6 +135,7 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     private void onSuccess()
     {
+        Debug.Log("Level Complete!");
         // Maybe some animation here??
         currentLevel++;
         if (currentLevel < songList.Length) loadLevel();
@@ -139,6 +152,7 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     private void onFail()
     {
+        Debug.Log("Level Failure... Resetting Level!");
         //Maybe some animation here??
         loadLevel();
     }
@@ -148,9 +162,12 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     private void loadLevel()
     {
+        Debug.Log("Loading new level");
         activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
         songLength = activeSongNotes.getSongLength();
+        Debug.Log("Song Length is " + songLength.ToString());
         createNotePool(); // Sets up the pool of notes for players to use
+        songCards = new GameObject[songLength];
     }
 
     private void initializeVariables()
@@ -214,6 +231,16 @@ public class GameMaster : MonoBehaviour {
         set { songCards = value; }
     }
 
+    private bool allCardsPlaced()
+    {
+        for(int i = 0; i < songLength; i++)
+        {
+            if (songCardArray[i] == null) return false;
+        }
+        Debug.Log("All notes placed!");
+        return true;
+    }
+
     // Use this for initialization
     private void Start () {
         initializeVariables();
@@ -222,7 +249,7 @@ public class GameMaster : MonoBehaviour {
 	
 	// Update is called once per frame
 	private void Update () {
-	
+        if (allCardsPlaced()) compareNotes();
 	}
 
     private void toggleMenu()

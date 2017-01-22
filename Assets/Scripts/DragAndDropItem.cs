@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler {
 	public static GameObject itemBeingDragged;
 	Vector3 startPosition;
 	Transform startParent;
@@ -16,9 +16,7 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		startParent = transform.parent;
         UIManager.Instance.currentCardChosen = this.gameObject.GetComponent<cardClass>();
         UIManager.Instance.playSound(this.gameObject);
-//		GetComponent<CanvasGroup>().blocksRaycasts = false;
-
-		//GetComponent<CanvasGroup>().blocksRaycasts = false;
+        this.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
 	}
 
@@ -32,33 +30,67 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	}
 
 
-	#endregion
-
-	#region IEndDragHandler implementation
-
-	private Vector2 origPos;
+    #endregion
 
 
-	#endregion
+    #region IEndDragHandler implementation
 
-	#region IEndDragHandler implementation
-
-
-	public void OnEndDrag (PointerEventData eventData)
+    /// <summary>
+    /// When this object is dropped, it will check if it's a note from the scale
+    /// if it is, it will add itself to the "pool" of notes, and delete the game object
+    /// 
+    /// Otherwise, if it's a note from teh player's hand it will snap back to their hand
+    /// </summary>
+    public void OnEndDrag (PointerEventData eventData)
 	{
 		itemBeingDragged = null;
-		//GetComponent<CanvasGroup>().blocksRaycasts = true;
-		if(transform.parent == startParent){
-			transform.position = startPosition;
-			//transform.localPosition = new Vector3 (0, 0, 0);
+
+        this.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+        // If the location where this object is dropped already has a card in it, rebound this card to hand
+        if (transform.parent == startParent)
+        {
+            cardClass temp = gameObject.GetComponent<cardClass>();
+            if (temp.isNote())
+            {
+                if(!GameMaster.Instance.getPlayerHand().handFull())
+                {
+                    GameMaster.Instance.getPlayerHand().returnCardToHand(gameObject);
+                }
+                else
+                {
+                    GameMaster.Instance.insertCard(temp.cardNum);
+                    Destroy(gameObject);
+                }
+            }
+            else transform.position = startPosition;
 		}
 
 	}
 
-	#endregion
+    #endregion
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        Debug.Log("Dropping Item...(Unexpected Case)");
+        if (transform.parent == startParent)
+        {
+            cardClass temp = gameObject.GetComponent<cardClass>();
+            if (temp.isNote())
+            {
+                if (!GameMaster.Instance.getPlayerHand().handFull())
+                {
+                    GameMaster.Instance.getPlayerHand().returnCardToHand(gameObject);
+                }
+                else
+                {
+                    GameMaster.Instance.insertCard(temp.cardNum);
+                    Destroy(this);
+                }
+            }
+            else transform.position = startPosition;
+        }
+    }
 
 
-
-
-  
-}
+    }
