@@ -20,6 +20,7 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     [SerializeField]
     private UIManager UIFunctions;
 
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         //sourceCell = GetComponentInParent<DragAndDropCell>();                       // Remember source cell

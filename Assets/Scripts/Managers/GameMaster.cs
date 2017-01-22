@@ -25,7 +25,7 @@ public class GameMaster : MonoBehaviour {
     public AudioClip getSound()
     {
        return songList[currentLevel].GetComponent<SongClass>().noteSounds[0];
-        return songList[currentLevel].GetComponent<SongClass>().noteSounds[0];
+    
     }
 
 
@@ -83,8 +83,8 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     private void loadLevel()
     {
-        activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
-        songLength = activeSongNotes.getSongLength();
+     //   activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
+        //songLength = activeSongNotes.getSongLength();
     }
 
     private void initializeVariables()

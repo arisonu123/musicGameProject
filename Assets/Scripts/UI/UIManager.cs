@@ -5,9 +5,8 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour {
 #pragma warning disable 649
-    [SerializeField]
+
     [Header("Gameobjects needed for UI functions")]
-    private GameObject cameraObj;
 
 
     private GameObject[] songCards;
@@ -15,7 +14,8 @@ public class UIManager : MonoBehaviour {
     private cardClass currentCardSelected;
 #pragma warning restore 649
 
-   
+    private bool playingSound;
+
     private int[] currentDisplayedCardNums = { 0, 1, 2, 3 };
 	// Use this for initialization
 	private void Start () {
@@ -60,14 +60,29 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void playSong()
     {
-        GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip();
+       GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip();
 
        GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip();          
     }
 
     public void playSound(GameObject card)
     {
-        GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
+        if (!playingSound)
+        {
+            GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
+            playingSound = true;
+        }
+        soundPlayCheck();
+    }
+
+    private IEnumerator soundPlayCheck()
+    {
+        while( GameMaster.Instance.gameObject.GetComponent<AudioSource>().isPlaying)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        playingSound = false;
+        yield return null;
     }
 
     /// <summary>
