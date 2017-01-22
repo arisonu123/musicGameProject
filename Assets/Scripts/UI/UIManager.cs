@@ -6,7 +6,9 @@ using System.Collections;
 public class UIManager : MonoBehaviour {
 #pragma warning disable 649
 
-
+    [Header("Needed UI objects")]
+    private GameObject upButtonObj;
+    private GameObject downButtonObj;
 
     private cardClass currentCardSelected;
 #pragma warning restore 649
@@ -45,6 +47,31 @@ public class UIManager : MonoBehaviour {
     }
 
     /// <summary>
+    /// Gets the up button gameobject
+    /// </summary>
+    public GameObject upButObj
+    {
+        get { return upButtonObj; }
+    }
+
+    /// <summary>
+    /// Gets the down button gameobject
+    /// </summary>
+    public GameObject downButObj
+    {
+        get { return downButtonObj; }
+    }
+
+    /// <summary>
+    /// Gets the current card selected
+    /// </summary>
+    public cardClass currentCardChosen
+    {
+        get { return currentCardSelected; }
+
+        set { currentCardSelected= value; }
+    }
+    /// <summary>
     /// Selects the card, moves it up and plays its corresponding note sound clip
     /// </summary>
     public void selectCard(GameObject card)
@@ -59,13 +86,13 @@ public class UIManager : MonoBehaviour {
     /// <summary>
     /// Place the card in a location
     /// </summary>
-    public void placeCardOnScale()
+    public void placeCardOnScale(GameObject socket)
     {
         //fill data in this spot to correspond to data of dropped card
 
-        EventSystem.current.currentSelectedGameObject.GetComponent<cardClass>().setCardData(currentCardSelected.cardNum,true);
-        EventSystem.current.currentSelectedGameObject.GetComponent<Image>().enabled = true;
-        EventSystem.current.currentSelectedGameObject.transform.position = new Vector3(EventSystem.current.currentSelectedGameObject.transform.position.x, EventSystem.current.currentSelectedGameObject.transform.position.y + (0.3f * currentCardSelected.cardNum), 0);
+        socket.GetComponent<cardClass>().setCardData(currentCardSelected.cardNum,true);
+       // EventSystem.current.currentSelectedGameObject.GetComponent<Image>().enabled = true;
+        //EventSystem.current.currentSelectedGameObject.transform.position = new Vector3(EventSystem.current.currentSelectedGameObject.transform.position.x, EventSystem.current.currentSelectedGameObject.transform.position.y + (0.3f * currentCardSelected.cardNum), 0);
 
 
     }
@@ -84,7 +111,7 @@ public class UIManager : MonoBehaviour {
     {
         if (!playingSound)
         {
-           // GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
+          
             playingSound = true;
             soundPlayCheck(card);
             StartCoroutine(soundPlayCheck(card));
@@ -111,9 +138,18 @@ public class UIManager : MonoBehaviour {
         for(int i = 0; i < currentDisplayedCardNums.Length; i++)
         {
             GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(false);
-            currentDisplayedCardNums[i] += 1;
+            currentDisplayedCardNums[i] += 4;
             GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(true);
-        }     
+            if(currentDisplayedCardNums[i] == GameMaster.Instance.songCardArray.Length)
+            {
+                upButtonObj.SetActive(false);
+                if (downButtonObj.activeInHierarchy == false)
+                {
+                    downButtonObj.SetActive(true);
+                }
+            }
+        }   
+          
        
     }
 
@@ -123,11 +159,20 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void rotateCardsDown()
     {
+        
         for (int i = 0; i < currentDisplayedCardNums.Length; i++)
         {
             GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(false);
-            currentDisplayedCardNums[i] -= 1;
+            currentDisplayedCardNums[i] -= 4;
             GameMaster.Instance.songCardArray[currentDisplayedCardNums[i]].SetActive(true);
+            if (currentDisplayedCardNums[i] == 0)
+            {
+                downButtonObj.SetActive(false);
+                if (upButtonObj.activeInHierarchy == false)
+                {
+                    upButtonObj.SetActive(true);
+                }
+            }
         }
     }
 
