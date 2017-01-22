@@ -17,8 +17,7 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     static public event DragEvent OnItemDragStartEvent;                             // Drag start event
     static public event DragEvent OnItemDragEndEvent;                               // Drag end event
 
-    [SerializeField]
-    private UIManager UIFunctions;
+
 
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -36,7 +35,7 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		
     public void OnDrag(PointerEventData data)
     {
-            UIFunctions.playSound(this.gameObject);
+            UIManager.Instance.playSound(this.gameObject);
             this.transform.position = Input.mousePosition;                          // Item's icon follows to cursor
     }
 		
