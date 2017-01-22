@@ -18,7 +18,7 @@ public class cardClass : MonoBehaviour {
 
     [Header("Card specifics")]
     [SerializeField]
-    [Range(0,8)]
+    [Range(0,10)]
     [Tooltip("This number determines the image loaded onto the card, The image will be the image at this location from the card image array")]
     private int cardNumber;
   

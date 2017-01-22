@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class DragAndDropCell : MonoBehaviour, IDropHandler {
+public class DragAndDropCell: MonoBehaviour, IDropHandler {
 	public GameObject item {
 		get {
 			if(transform.childCount>0){

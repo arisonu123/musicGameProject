@@ -14,8 +14,12 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		itemBeingDragged = gameObject;
 		startPosition = transform.position;
 		startParent = transform.parent;
+
         UIManager.Instance.playSound(this.gameObject);
 //		GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+		//GetComponent<CanvasGroup>().blocksRaycasts = false;
+
 	}
 
 	#endregion
@@ -35,16 +39,26 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	private Vector2 origPos;
 
 
+	#endregion
+
+	#region IEndDragHandler implementation
+
+
 	public void OnEndDrag (PointerEventData eventData)
 	{
 		itemBeingDragged = null;
 		//GetComponent<CanvasGroup>().blocksRaycasts = true;
 		if(transform.parent == startParent){
 			transform.position = startPosition;
+			//transform.localPosition = new Vector3 (0, 0, 0);
 		}
+
 	}
 
 	#endregion
+
+
+
 
   
 }
