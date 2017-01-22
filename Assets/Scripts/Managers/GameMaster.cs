@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class GameMaster : MonoBehaviour {
+
 #pragma warning disable 649
     private int currentLevel, songLength;
     private SongClass activeSongNotes;
@@ -24,6 +25,7 @@ public class GameMaster : MonoBehaviour {
     public AudioClip getSound()
     {
        return songList[currentLevel].GetComponent<SongClass>().noteSounds[0];
+        return songList[currentLevel].GetComponent<SongClass>().noteSounds[0];
     }
 
 
@@ -58,8 +60,12 @@ public class GameMaster : MonoBehaviour {
     {
         // Maybe some animation here??
         currentLevel++;
-        if(currentLevel < songList.Length) loadLevel();
+        if (currentLevel < songList.Length) loadLevel();
         // Case for no more levels here
+        else
+        {
+            toggleMenu();
+        }
 
     }
 
@@ -130,7 +136,7 @@ public class GameMaster : MonoBehaviour {
 #pragma warning restore 649
 
     /// <summary>
-    /// Array of cards
+    /// Array of cards currently placed by players
     /// </summary>
     public GameObject[] songCardArray
     {
@@ -150,14 +156,19 @@ public class GameMaster : MonoBehaviour {
 	
 	}
 
+    private void toggleMenu()
+    {
+        mainMenu.SetActive(!mainMenu.activeInHierarchy);
+        mainGame.SetActive(!mainGame.activeInHierarchy);
+    }
+
     /// <summary>
     /// Start the game, disabled and enable game objects as needed, load song up
     /// </summary>
     public void startGame()
     {
-        
-        mainMenu.SetActive(false);
-        mainGame.SetActive(true);
+
+        toggleMenu();
 
         //TODO:load song up 
     }

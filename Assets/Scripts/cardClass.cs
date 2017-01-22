@@ -45,9 +45,6 @@ public class cardClass : MonoBehaviour {
         get { return noteSounds; }
     }
 
-   
-
-
     private void Awake()
     {
         this.gameObject.GetComponent<Image>().sprite = cardImages[cardNumber];

@@ -1,0 +1,9 @@
+diff a/Assets/Scripts/Managers/GameMaster.cs b/Assets/Scripts/Managers/GameMaster.cs	(rejected hunks)
+@@ -169,6 +169,7 @@
+      /// <summary>
+      /// Start the game, disabled and enable game objects as needed, load song up
+      /// </summary>
+++>>>>>>> 64ff87019d3c32ffd8fd1a978a074dc17024ea7c
+      public void startGame()
+      {
+ -        

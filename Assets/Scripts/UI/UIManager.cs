@@ -16,7 +16,6 @@ public class UIManager : MonoBehaviour {
 #pragma warning restore 649
 
    
-
     private int[] currentDisplayedCardNums = { 0, 1, 2, 3 };
 	// Use this for initialization
 	private void Start () {
@@ -33,9 +32,11 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void selectCard()
     {
+        AudioSource audioSource = GameMaster.Instance.gameObject.GetComponent<AudioSource>();
         EventSystem.current.currentSelectedGameObject.transform.Translate(Vector3.forward);
         currentCardSelected = EventSystem.current.currentSelectedGameObject.GetComponent<cardClass>();
-        cameraObj.GetComponent<AudioSource>().PlayOneShot(currentCardSelected.noteAudioClips[currentCardSelected.cardNum]);
+        audioSource.Stop();
+        audioSource.PlayOneShot(currentCardSelected.noteAudioClips[currentCardSelected.cardNum]);
     }
 
     /// <summary>
@@ -44,12 +45,15 @@ public class UIManager : MonoBehaviour {
     public void placeCardOnScale()
     {
         //fill data in this spot to correspond to data of dropped card
+
         EventSystem.current.currentSelectedGameObject.GetComponent<cardClass>().setCardData(currentCardSelected.cardNum,true);
         EventSystem.current.currentSelectedGameObject.GetComponent<Image>().enabled = true;
         EventSystem.current.currentSelectedGameObject.transform.position = new Vector3(EventSystem.current.currentSelectedGameObject.transform.position.x, EventSystem.current.currentSelectedGameObject.transform.position.y + (0.3f * currentCardSelected.cardNum), 0);
 
 
     }
+
+    
 
     /// <summary>
     /// Play the song
@@ -58,6 +62,7 @@ public class UIManager : MonoBehaviour {
     {
         GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip();
 
+       GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip();          
     }
 
     public void playSound(GameObject card)
