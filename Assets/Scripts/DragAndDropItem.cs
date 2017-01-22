@@ -17,6 +17,9 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     static public event DragEvent OnItemDragStartEvent;                             // Drag start event
     static public event DragEvent OnItemDragEndEvent;                               // Drag end event
 
+
+
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         //sourceCell = GetComponentInParent<DragAndDropCell>();                       // Remember source cell
@@ -32,7 +35,7 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		
     public void OnDrag(PointerEventData data)
     {
-
+            UIManager.Instance.playSound(this.gameObject);
             this.transform.position = Input.mousePosition;                          // Item's icon follows to cursor
     }
 		

@@ -41,23 +41,22 @@ public class SongClass : MonoBehaviour {
         yield return null;
     }
 
-	[SerializeField]
-	[Header("Song Notes")]
-	private int[] notes;
+ 
+    [SerializeField]
+    [Header("Song Notes")]
+    private int[] notes;
 #pragma warning restore 649
     /// <summary>
     /// Gets the note value in the select portion of the song (0 = first)
     /// </summary>
     /// <value>The song clip.</value>
     public int getNote(int position)
-	{
-		return notes[position];
-	}
+    {
+        return notes[position];
+    }
 
-	public int getSongLength()
-	{
-		return notes.Length;
-	}
+    public int getSongLength()
+    {
+        return notes.Length;
+    }
 }
-
-

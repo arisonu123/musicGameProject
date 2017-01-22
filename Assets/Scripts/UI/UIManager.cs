@@ -5,27 +5,44 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour {
 #pragma warning disable 649
-    [SerializeField]
-    [Header("Gameobjects needed for UI functions")]
-    private GameObject cameraObj;
 
 
-    private GameObject[] songCards;
 
     private cardClass currentCardSelected;
 #pragma warning restore 649
 
-   
+    private bool playingSound;
+
     private int[] currentDisplayedCardNums = { 0, 1, 2, 3 };
-	// Use this for initialization
-	private void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	private void Update () {
-	
-	}
+
+    private static UIManager instance;
+
+    public static UIManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                if (GameObject.FindObjectOfType(typeof(UIManager)) != null)
+                {
+                    instance = GameObject.FindObjectOfType(typeof(UIManager)) as UIManager;
+
+                }
+                else
+                {
+                    GameObject temp = new GameObject();
+                    temp.name = "~UIManager";
+                    temp.AddComponent<UIManager>();
+                    temp.tag = "UIManager";
+                    temp.isStatic = true;
+                    DontDestroyOnLoad(temp);
+                    instance = temp.GetComponent<UIManager>();
+
+                }
+            }
+            return instance;
+        }
+    }
 
     /// <summary>
     /// Selects the card, moves it up and plays its corresponding note sound clip
@@ -60,9 +77,33 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void playSong()
     {
+       GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip();
+
        GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip();          
     }
 
+    public void playSound(GameObject card)
+    {
+        if (!playingSound)
+        {
+            GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
+            playingSound = true;
+            soundPlayCheck();
+        }
+        
+    }
+
+    private IEnumerator soundPlayCheck()
+    {
+        //AudioClip clipToPlay = GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
+        playingSound = true;
+        while ( GameMaster.Instance.gameObject.GetComponent<AudioSource>().isPlaying)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        playingSound = false;
+        yield return null;
+    }
 
     /// <summary>
     /// Rotate the cards up
