@@ -47,10 +47,10 @@ public class UIManager : MonoBehaviour {
     /// <summary>
     /// Selects the card, moves it up and plays its corresponding note sound clip
     /// </summary>
-    public void selectCard()
+    public void selectCard(GameObject card)
     {
         AudioSource audioSource = GameMaster.Instance.gameObject.GetComponent<AudioSource>();
-        EventSystem.current.currentSelectedGameObject.transform.Translate(Vector3.forward);
+        card.transform.Translate(Vector3.forward);
         currentCardSelected = EventSystem.current.currentSelectedGameObject.GetComponent<cardClass>();
         audioSource.Stop();
         audioSource.PlayOneShot(currentCardSelected.noteAudioClips[currentCardSelected.cardNum]);
@@ -86,21 +86,21 @@ public class UIManager : MonoBehaviour {
     {
         if (!playingSound)
         {
-            GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
+           // GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
             playingSound = true;
-            soundPlayCheck();
+            soundPlayCheck(card);
         }
         
     }
 
-    private IEnumerator soundPlayCheck()
+    private IEnumerator soundPlayCheck(GameObject card)
     {
-        //AudioClip clipToPlay = GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
+        AudioClip clipToPlay = card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum];
+        GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
         playingSound = true;
-        while ( GameMaster.Instance.gameObject.GetComponent<AudioSource>().isPlaying)
-        {
-            yield return new WaitForEndOfFrame();
-        }
+
+        yield return new WaitForSeconds(clipToPlay.length);
+        
         playingSound = false;
         yield return null;
     }
