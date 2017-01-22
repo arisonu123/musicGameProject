@@ -77,11 +77,7 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void playSong()
     {
-       GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip();         
-
-        GameMaster.Instance.getCurrentSong().gameObject.GetComponent<SongClass>().songClip();
-        
-               
+      GameMaster.Instance.getCurrentSong().gameObject.GetComponent<SongClass>().songClip();         
     }
 
     public void playSound(GameObject card)
