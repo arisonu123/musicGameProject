@@ -83,8 +83,8 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     private void loadLevel()
     {
-     //   activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
-        //songLength = activeSongNotes.getSongLength();
+        activeSongNotes = songList[currentLevel].GetComponent<SongClass>();
+        songLength = activeSongNotes.getSongLength();
     }
 
     private void initializeVariables()

@@ -20,7 +20,7 @@ public class SongClass : MonoBehaviour {
     public void songClip()
     {
         // Possible to change to having a "timestamp" of sorts if we have time
-        if (!GameMaster.Instance.soundCurrentlyPlaying)
+        if (!(GameMaster.Instance.soundCurrentlyPlaying))
         {
             GameMaster.Instance.soundCurrentlyPlaying = true;
             StartCoroutine(playSongClip());
