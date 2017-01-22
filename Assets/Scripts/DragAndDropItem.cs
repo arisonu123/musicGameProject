@@ -37,7 +37,7 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		//GetComponent<CanvasGroup>().blocksRaycasts = true;
 		if(transform.parent == startParent){
 			transform.position = startPosition;
-			transform.localPosition = new Vector3 (0, 0, 0);
+			//transform.localPosition = new Vector3 (0, 0, 0);
 		}
 
 	}
