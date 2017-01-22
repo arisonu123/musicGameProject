@@ -78,6 +78,10 @@ public class UIManager : MonoBehaviour {
     public void playSong()
     {
        GameObject.FindWithTag("songObj").GetComponent<SongClass>().songClip();         
+
+        GameMaster.Instance.getCurrentSong().gameObject.GetComponent<SongClass>().songClip();
+        
+               
     }
 
     public void playSound(GameObject card)
@@ -87,6 +91,7 @@ public class UIManager : MonoBehaviour {
            // GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
             playingSound = true;
             soundPlayCheck(card);
+            StartCoroutine(soundPlayCheck(card));
         }
         
     }
@@ -95,7 +100,6 @@ public class UIManager : MonoBehaviour {
     {
         AudioClip clipToPlay = card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum];
         GameMaster.Instance.gameObject.GetComponent<AudioSource>().PlayOneShot(card.GetComponent<cardClass>().noteAudioClips[card.GetComponent<cardClass>().cardNum]);
-        playingSound = true;
 
         yield return new WaitForSeconds(clipToPlay.length);
         
